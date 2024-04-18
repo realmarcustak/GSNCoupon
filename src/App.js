@@ -19,7 +19,7 @@ const App = () => {
   const [isEmployeeChecked, setIsEmployeeChecked] = useState(false);
   const [isCouponUsed, setIsCouponUsed] = useState(false);
 
-  // 폼 제출 시 처리
+  // 폼 제출 시 처리 adaf
   const handleSubmit = (event) => {
     event.preventDefault();
     // 쿠폰 발급 로직을 여기에 추가하세요

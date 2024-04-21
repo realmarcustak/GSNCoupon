@@ -95,8 +95,24 @@ const App = () => {
     <div className='container'>
       {loading ? ( // 로딩 상태일 때 로딩 페이지를 표시합니다.
         <div className='loading'>
-          <HashLoader color='#3690d6' />
-          <div className='loading-text'>우리 동네 쿠폰</div>
+          <HashLoader color='#f1f7fa' />
+          <div className='loading-text'>
+            <div>
+              <span className='first-text'>우</span>
+              <span>리</span>
+              <span> </span>
+            </div>
+            <div>
+              <span className='first-text'>동</span>
+              <span>네</span>
+              <span> </span>
+              <span className='first-text'>GS</span>
+            </div>
+            <div>
+              <span className='first-text'>쿠</span>
+              <span>폰</span>
+            </div>
+          </div>
         </div>
       ) : (
         // 로딩이 완료되면 현재 페이지를 표시합니다.

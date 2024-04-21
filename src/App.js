@@ -90,7 +90,13 @@ const App = () => {
       }
     }
   };
-
+  // 배너 이미지 클릭 시 처리
+  const handleBannerClick = () => {
+    window.open(
+      'http://gs25.gsretail.com/gscvs/ko/customer-engagement/event/detail/publishing?pageNum=1&eventCode=8836791193120',
+      '_blank'
+    );
+  };
   return (
     <div className='container'>
       {loading ? ( // 로딩 상태일 때 로딩 페이지를 표시합니다.
@@ -166,6 +172,7 @@ const App = () => {
               className='banner-image'
               src='https://hpsimg.gsretail.com/medias/sys_master/images/images/h97/h63/9097858318366.jpg'
               alt='Description of your image'
+              onClick={handleBannerClick}
             />
           </div>
         </form>

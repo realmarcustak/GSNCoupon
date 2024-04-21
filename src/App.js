@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import './CouponForm.css'; // 스타일 파일 불러오기
+import { HashLoader } from 'react-spinners';
 
 const App = () => {
   // 각 필드의 상태를 관리하는 useState 훅을 사용합니다.
@@ -24,7 +25,7 @@ const App = () => {
     // 0.5초 후 로딩 상태를 false로 변경하여 화면을 표시합니다.
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 2000);
 
     // 컴포넌트가 unmount될 때 타이머를 클리어합니다.
     return () => clearTimeout(timer);
@@ -94,10 +95,8 @@ const App = () => {
     <div className='container'>
       {loading ? ( // 로딩 상태일 때 로딩 페이지를 표시합니다.
         <div className='loading'>
-          <img
-            src='https://play-lh.googleusercontent.com/4WY8XhkRw18FCQPS-OLTOiNUmJ8MCnlB9tz37wDEvYmRQg3jDpCxAHL1kx8Vj5qFjXaT=w480-h960-rw'
-            alt='Loading...'
-          />
+          <HashLoader color='#3690d6' />
+          <div className='loading-text'>우리 동네 쿠폰</div>
         </div>
       ) : (
         // 로딩이 완료되면 현재 페이지를 표시합니다.

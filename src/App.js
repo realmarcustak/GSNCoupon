@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import './CouponForm.css'; // 스타일 파일 불러오기
 
 const App = () => {
   // 각 필드의 상태를 관리하는 useState 훅을 사용합니다.
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [imageUrl, setImageUrl] = useState(
     'https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20211006_195%2F1633486303939uKtEG_PNG%2FZrsWsP4yVkxWKPRvV-XI3Vy4.png'
   );
@@ -18,6 +19,16 @@ const App = () => {
   const [isCouponIssued, setIsCouponIssued] = useState(false);
   const [isEmployeeChecked, setIsEmployeeChecked] = useState(false);
   const [isCouponUsed, setIsCouponUsed] = useState(false);
+
+  useEffect(() => {
+    // 0.5초 후 로딩 상태를 false로 변경하여 화면을 표시합니다.
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500);
+
+    // 컴포넌트가 unmount될 때 타이머를 클리어합니다.
+    return () => clearTimeout(timer);
+  }, []);
 
   // 폼 제출 시 처리 adaf
   const handleSubmit = (event) => {
@@ -81,51 +92,69 @@ const App = () => {
 
   return (
     <div className='container'>
-      <form onSubmit={handleSubmit}>
-        <div className='coupon-item'>
-          <div>
-            <img className='product-image' src={imageUrl} alt='Product' />
-          </div>
-          <div className='product-details'>
-            {/* 바코드 이미지가 있는 경우에만 표시합니다. */}
-            {barcodeImageUrl && isCouponIssued && (
-              <div className='coupon-item'>
-                <img
-                  className='barcode-image'
-                  src={barcodeImageUrl}
-                  alt='Barcode'
-                />
-              </div>
-            )}
-            <div className='product-name'>{productName}</div>
-            <div className='coupon-name'>{couponName}</div>
-            <div className='coupon-date'>{couponDate}</div>
-          </div>
+      {loading ? ( // 로딩 상태일 때 로딩 페이지를 표시합니다.
+        <div className='loading'>
+          <img
+            src='https://play-lh.googleusercontent.com/4WY8XhkRw18FCQPS-OLTOiNUmJ8MCnlB9tz37wDEvYmRQg3jDpCxAHL1kx8Vj5qFjXaT=w480-h960-rw'
+            alt='Loading...'
+          />
         </div>
+      ) : (
+        // 로딩이 완료되면 현재 페이지를 표시합니다.
+        <form onSubmit={handleSubmit}>
+          <div className='coupon-item'>
+            <div>
+              <img className='product-image' src={imageUrl} alt='Product' />
+            </div>
+            <div className='product-details'>
+              {/* 바코드 이미지가 있는 경우에만 표시합니다. */}
+              {barcodeImageUrl && isCouponIssued && (
+                <div className='coupon-item'>
+                  <img
+                    className='barcode-image'
+                    src={barcodeImageUrl}
+                    alt='Barcode'
+                  />
+                </div>
+              )}
+              <div className='product-name'>{productName}</div>
+              <div className='coupon-name'>{couponName}</div>
+              <div className='coupon-date'>{couponDate}</div>
+            </div>
+          </div>
 
-        {/* 쿠폰 발급 또는 직원 확인 버튼을 표시합니다. */}
-        {isCouponIssued && !isEmployeeChecked && (
-          <button type='button' onClick={handleEmployeeCheck}>
-            직원 확인
-          </button>
-        )}
-        {/* 직원 확인 후 쿠폰 사용 완료 버튼을 표시합니다. */}
-        {isCouponIssued && isEmployeeChecked && (
-          <button
-            type='button'
-            onClick={handleCouponUse}
-            disabled={isCouponUsed} // 쿠폰 사용 여부에 따라 버튼을 비활성화합니다.
-          >
-            {isCouponUsed ? '쿠폰 사용 완료' : '쿠폰 사용하기'}
-          </button>
-        )}
-        {/* 쿠폰 미발급 시 발급 버튼을 표시합니다. */}
-        {!isCouponIssued && (
-          <button type='submit'>
-            {isCouponIssued ? '직원 확인' : '쿠폰 발급'}
-          </button>
-        )}
-      </form>
+          {/* 쿠폰 발급 또는 직원 확인 버튼을 표시합니다. */}
+          {isCouponIssued && !isEmployeeChecked && (
+            <button type='button' onClick={handleEmployeeCheck}>
+              직원 확인
+            </button>
+          )}
+          {/* 직원 확인 후 쿠폰 사용 완료 버튼을 표시합니다. */}
+          {isCouponIssued && isEmployeeChecked && (
+            <button
+              type='button'
+              onClick={handleCouponUse}
+              disabled={isCouponUsed} // 쿠폰 사용 여부에 따라 버튼을 비활성화합니다.
+            >
+              {isCouponUsed ? '쿠폰 사용 완료' : '쿠폰 사용하기'}
+            </button>
+          )}
+          {/* 쿠폰 미발급 시 발급 버튼을 표시합니다. */}
+          {!isCouponIssued && (
+            <button type='submit'>
+              {isCouponIssued ? '직원 확인' : '쿠폰 발급'}
+            </button>
+          )}
+          {/* 이미지 추가 */}
+          <div>
+            <img
+              className='banner-image'
+              src='https://hpsimg.gsretail.com/medias/sys_master/images/images/h97/h63/9097858318366.jpg'
+              alt='Description of your image'
+            />
+          </div>
+        </form>
+      )}
     </div>
   );
 };
